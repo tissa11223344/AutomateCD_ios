@@ -47,5 +47,5 @@ jobs:
         id: download-link
         run: echo "::set-output name=url::https://example.com/path/to/your/ipa"
 
-      - name: Print download link
-        run: echo "Download link: ${{ steps.download-link.outputs.url }}"
+    #   - name: Print download link
+        # run: echo "Download link: ${{ steps.download-link.outputs.url }}"

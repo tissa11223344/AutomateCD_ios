@@ -1,1 +1,51 @@
+name: iOS Build and Deploy
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+
+      - name: Install bundler
+        run: gem install bundler
+
+      - name: Install dependencies
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Build and deploy iOS app
+        uses: vfrascello/xcode-deploy@v1.5
+        with:
+          xcode-version: '15.0'
+          configuration: 'Release'
+          scheme: 'AutomateCD'
+          path-to-export-options: '../../ExportOptions.plist'
+          update-build: true
+          install-pods: false
+          resolve-package-dependencies: true
+          distribution-certificate-p12: ${{ secrets.DISTRIBUTION_CERTIFICATE_P12 }}
+          distribution-certificate-password: ${{ secrets.DISTRIBUTION_CERTIFICATE_PASSWORD }}
+          app-store-provisioning-profile: ${{ secrets.APPSTORE_PROVISIONING_PROFILE}}
+          auth-key-id: ${{ secrets.AUTH_KEY_ID }}
+          auth-key-issuer-id: ${{ secrets.AUTH_KEY_ISSUER_ID }}
+          auth-key-p8: ${{ secrets.AUTH_KEY_P8 }}
+
+      - name: Generate download link
+        id: download-link
+        run: echo "::set-output name=url::https://example.com/path/to/your/ipa"
+
+      - name: Print download link
+        run: echo "Download link: ${{ steps.download-link.outputs.url }}"

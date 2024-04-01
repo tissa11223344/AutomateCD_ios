@@ -23,6 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd ${{ github.workspace }}
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
 
@@ -48,4 +49,4 @@ jobs:
         run: echo "::set-output name=url::https://example.com/path/to/your/ipa"
 
     #   - name: Print download link
-        # run: echo "Download link: ${{ steps.download-link.outputs.url }}"
+    #     run: echo "Download link: ${{ steps.download-link.outputs.url }}"

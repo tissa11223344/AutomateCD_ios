@@ -39,7 +39,7 @@ jobs:
       - name: Build and deploy iOS app
         uses: vfrascello/xcode-deploy@v1.5
         with:
-          xcode-version: '15.0'
+          xcode-version: '14.0'
           configuration: 'Release'
           scheme: 'AutomateCD'
           path-to-export-options: '../../ExportOptions.plist'

@@ -64,14 +64,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Xcode
-        uses: actions/setup-xcode@v2
-        with:
-          xcode-version: '14.0'
+      - name: Install Xcode
+        run: |
+          sudo xcode-select --switch /Applications/Xcode.app
+          sudo xcodebuild -runFirstLaunch
 
       - name: Install CocoaPods
         run: |
-          gem install cocoapods
+          sudo gem install cocoapods
           pod install
 
       - name: Build

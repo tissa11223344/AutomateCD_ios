@@ -75,7 +75,7 @@ jobs:
           pod install
 
       - name: Build
-        run: xcodebuild -workspace AutomateCD.xcworkspace -scheme AutomateCD -configuration Release clean archive -archivePath $PWD/build/AutomateCD
+        run: xcodebuild -workspace AutomateCD.xcworkspace -scheme AutomateCD -configuration Release clean archive -archivePath $PWD/build/AutomateCD -allowProvisioningUpdates
 
       - name: Export IPA
         run: xcodebuild -exportArchive -archivePath $PWD/build/AutomateCD.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build

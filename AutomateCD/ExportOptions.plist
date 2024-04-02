@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>method</key>
-	<string>appStore</string>
+	<string>Development</string>
 	<key>teamID</key>
 	<string>8H4VCQCSWU</string>
 	<key>uploadSymbols</key>
 	<true/>
 	<key>signingStyle</key>
-	<string>Automatic</string>
+	<string>Manual</string>
 	<key>signingCertificate</key>
 	<string>Apple Development: TISSA Technology (WENRNV4Y62)</string>
 </dict>

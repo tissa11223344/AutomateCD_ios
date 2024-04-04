@@ -382,7 +382,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Tissatech.AutomateCD;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Tissatech.AutomateCD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = AutomateCD;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = AutomateCD;
@@ -417,7 +417,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Tissatech.AutomateCD;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Tissatech.AutomateCD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = AutomateCD;
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = AutomateCD;

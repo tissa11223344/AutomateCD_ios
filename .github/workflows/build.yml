@@ -135,7 +135,7 @@
 #           path: $GITHUB_WORKSPACE/AutomateCD.ipa
 
 
-name: Build iOS application
+name: Build iOS applications
 
 on:
   push:
@@ -198,7 +198,7 @@ jobs:
           -archivePath $RUNNER_TEMP/AutomateCD.xcarchive \
           clean archive \
           -allowProvisioningUpdates
-          echo "::set-output name=archivePath::$RUNNER_TEMP/AutomateCD.xcarchive" # Set output variable
+          echo "Archive path: $RUNNER_TEMP/AutomateCD.xcarchive" > $GITHUB_ENV # Store archive path in environment variable
       - name: Export IPA
         run: |
           echo "Runner temp path: $RUNNER_TEMP"
@@ -213,6 +213,3 @@ jobs:
         with:
           name: CICDDemoApp
           path: $GITHUB_WORKSPACE/AutomateCD.ipa
-      - name: Print archive path
-        run: |
-          echo "Archive path: ${{ steps.archive.outputs.archivePath }}"

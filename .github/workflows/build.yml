@@ -210,7 +210,7 @@
 
 
 
-name: Build iOS application
+name: Build iOS apps
 
 on:
   push:
@@ -247,18 +247,24 @@ jobs:
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.APPSTORE_PROVISIONING_PROFILE }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
+          # Create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          # Import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+          # Create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          # Import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
+          # Apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
       - name: Generate and archive
         run: |
           xcodebuild -workspace "AutomateCD.xcworkspace" \
@@ -267,34 +273,17 @@ jobs:
           -archivePath $RUNNER_TEMP/AutomateCD.xcarchive \
           clean archive \
           -allowProvisioningUpdates
-          mv $RUNNER_TEMP/AutomateCD.xcarchive $GITHUB_WORKSPACE
-      - name: Check if archive exists
-        run: |
-          if [ -d "$GITHUB_WORKSPACE/AutomateCD.xcarchive" ]; then
-            echo "Archive exists"
-          else
-            echo "Error: Archive not found"
-            exit 1
-          fi
-      - name: Export IPA
-        run: |
-          xcodebuild -exportArchive -archivePath $GITHUB_WORKSPACE/AutomateCD.xcarchive \
-          -exportOptionsPlist ExportOptions.plist \
+          # Export IPA
+          echo "Runner temp path: $RUNNER_TEMP"
+          xcodebuild -exportArchive -archivePath $RUNNER_TEMP/AutomateCD.xcarchive \
+          -exportOptionsPlist - \
           -exportPath $RUNNER_TEMP/build
-      - name: Move IPA to workspace
-        run: |
+          echo "Runner temp path1: $RUNNER_TEMP"
+          # Move IPA to workspace
           mv $RUNNER_TEMP/build/AutomateCD.ipa $GITHUB_WORKSPACE
-      - name: Install fastlane
-        run: |
-          gem install fastlane
-      - name: Upload IPA to TestFlight
-        run: |
-          fastlane pilot upload -u shubha@tissatech.com -i $GITHUB_WORKSPACE/AutomateCD.ipa
-      - name: Capture TestFlight URL
-        id: testflight_url
-        run: |
-          url=$(fastlane pilot output | grep "App URL:")
-          echo "::set-output name=url::$url"
-      - name: Print TestFlight URL
-        run: |
-          echo "TestFlight URL: ${{ steps.testflight_url.outputs.url }}"
+
+      - name: Upload IPA as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: CICDDemoApp
+          path: $GITHUB_WORKSPACE/AutomateCD.ipa

@@ -203,7 +203,7 @@ jobs:
         run: |
           echo "Runner temp path: $RUNNER_TEMP"
           xcodebuild -exportArchive -archivePath $RUNNER_TEMP/AutomateCD.xcarchive \
-          -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist \
+          -exportOptionsPlist $GITHUB_WORKSPACE/ExportOptions.plist \
           -exportPath $RUNNER_TEMP/build
           echo "Runner temp path1: $RUNNER_TEMP"
           # Move IPA to workspace

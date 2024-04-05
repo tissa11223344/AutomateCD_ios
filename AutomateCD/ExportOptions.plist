@@ -1,16 +1,41 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">-->
+<!--<plist version="1.0">-->
+<!--<dict>-->
+<!--	<key>method</key>-->
+<!--	<string>Ad hoc</string>-->
+<!--	<key>teamID</key>-->
+<!--	<string>8H4VCQCSWU</string>-->
+<!--	<key>uploadSymbols</key>-->
+<!--	<true/>-->
+<!--	<key>signingStyle</key>-->
+<!--	<string>Manual</string>-->
+<!--	<key>signingCertificate</key>-->
+<!--	<string>Apple Distribution: TISSA Technology (8H4VCQCSWU)</string>-->
+<!--</dict>-->
+<!--</plist>-->
+
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>method</key>
-	<string>Ad hoc</string>
-	<key>teamID</key>
-	<string>8H4VCQCSWU</string>
-	<key>uploadSymbols</key>
-	<true/>
-	<key>signingStyle</key>
-	<string>Manual</string>
-	<key>signingCertificate</key>
-	<string>Apple Distribution: TISSA Technology (8H4VCQCSWU)</string>
+    <key>method</key>
+    <string>ad-hoc</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>Tissatech.AutomateCD</key>
+        <string>0f1d8fa1-7ab8-4c75-a6f6-2f73f474791f.mobileprovision</string>
+    </dict>
+    <key>signingCertificate</key>
+    <string>Apple Distribution: TISSA Technology (8H4VCQCSWU)</string>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>stripSwiftSymbols</key>
+    <true/>
+    <key>teamID</key>
+    <string>8H4VCQCSWU</string>
+    <key>thinning</key>
+    <string>&lt;none&gt;</string>
 </dict>
 </plist>

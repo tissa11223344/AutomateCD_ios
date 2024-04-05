@@ -193,8 +193,17 @@ jobs:
           clean archive \
           -allowProvisioningUpdates
           mv $RUNNER_TEMP/AutomateCD.xcarchive $GITHUB_WORKSPACE
+      - name: Check if archive exists
+        run: |
+          if [ -d "$GITHUB_WORKSPACE/AutomateCD.xcarchive" ]; then
+            echo "Archive exists"
+          else
+            echo "Error: Archive not found"
+            exit 1
+          fi
       - name: Upload archive as artifact
         uses: actions/upload-artifact@v2
         with:
           name: ios-archive
           path: $GITHUB_WORKSPACE/AutomateCD.xcarchive
+          if-no-files-found: warn

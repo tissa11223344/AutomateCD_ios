@@ -49,7 +49,7 @@
 #         run: echo "::set-output name=url::https://example.com/path/to/your/ipa"
 
 
-name: iOS Build and Deploy
+name: iOS Build and Deployment
 
 on:
   push:

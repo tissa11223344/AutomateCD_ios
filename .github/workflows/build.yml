@@ -135,7 +135,7 @@
 #           path: $GITHUB_WORKSPACE/AutomateCD.ipa
 
 
-name: Build iOS apps
+name: Build iOS application
 
 on:
   push:

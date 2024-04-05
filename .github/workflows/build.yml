@@ -49,7 +49,7 @@
 #         run: echo "::set-output name=url::https://example.com/path/to/your/ipa"
 
 
-name: iOS Build and Deployment
+name: iOS Build and Deploy
 
 on:
   push:
@@ -75,10 +75,13 @@ jobs:
           pod install
 
       - name: Build
-        run: xcodebuild -workspace AutomateCD.xcworkspace -scheme AutomateCD -configuration Release clean archive -archivePath $PWD/build/AutomateCD -allowProvisioningUpdates
+        env:
+          PROVISIONING_PROFILE: ${{ secrets.APPSTORE_PROVISIONING_PROFILE }}
+          CERTIFICATE: ${{ secrets.DISTRIBUTION_CERTIFICATE_P12 }}
+        run: xcodebuild -workspace AutomateCD.xcworkspace -scheme AutomateCD -configuration Release clean archive -archivePath $PWD/build/AutomateCD -allowProvisioningUpdates PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" CERTIFICATE="${CERTIFICATE}"
 
       - name: Export IPA
-        run: xcodebuild -exportArchive -archivePath $PWD/build/AutomateCD.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build
+        run: xcodebuild -exportArchive -archivePath $PWD/build/AutomateCD.xcarchive -exportOptionsPlist AutomateCD/ExportOptions.plist -exportPath $PWD/build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
